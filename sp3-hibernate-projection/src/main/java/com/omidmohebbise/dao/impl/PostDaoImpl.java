@@ -6,8 +6,10 @@ import com.omidmohebbise.model.repository.PostJpaRepository;
 import com.omidmohebbise.model.repository.view.PostShortProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +25,11 @@ public class PostDaoImpl implements PostDao {
     @Override
     public List<PostShortProjection> findAllWithIDAndTitle() {
         return repository.findPostsIdAndTitle();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Stream<Post> streamAllPost() {
+         return repository.streamAll();
     }
 }
